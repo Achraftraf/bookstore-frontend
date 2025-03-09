@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, NgForm } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { CommonModule, NgIf } from '@angular/common';
+import { FormsModule, NgForm,} from '@angular/forms';
+import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { BookService, Book } from '../../services/book.service';  // Import BookService and Book interface
 
@@ -13,6 +13,7 @@ import { BookService, Book } from '../../services/book.service';  // Import Book
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
+    NgIf,MatLabel
   ],
   templateUrl: './book-form.component.html',
 })

@@ -1,11 +1,17 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Book } from '../../models/book.model';
+import { NgIf } from '@angular/common';
+import { FormsModule, NgModel } from '@angular/forms';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-edit-book-dialog',
   templateUrl: './edit-book-dialog.component.html',
-  styleUrls: ['./edit-book-dialog.component.css']
+  styleUrls: ['./edit-book-dialog.component.css'],
+  imports: [FormsModule,MatLabel,MatFormField
+  ]
 })
 export class EditBookDialogComponent {
   updatedBook: Book;  // Store the updated book data

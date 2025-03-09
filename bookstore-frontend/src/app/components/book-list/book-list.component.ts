@@ -3,11 +3,16 @@ import { MatDialog } from '@angular/material/dialog';
 import { BookService } from '../../services/book.service';
 import { Book } from '../../models/book.model';
 import { EditBookDialogComponent } from '../edit-book-dialog/edit-book-dialog.component';
+import { NgIf } from '@angular/common';
+import { FormsModule, NgModel } from '@angular/forms';
+import { MatIcon } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
 
 @Component({
   selector: 'app-book-list',
   templateUrl: './book-list.component.html',
-  styleUrls: ['./book-list.component.css']
+  styleUrls: ['./book-list.component.css'],
+  imports: [FormsModule,MatIcon,MatTableModule]
 })
 export class BookListComponent implements OnInit {
   books: Book[] = [];  // Array to hold the list of books
