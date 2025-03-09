@@ -1,36 +1,37 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { BookService, Book } from './book.service';
 
-export interface Book {
-  id?: number;
-  title: string;
-  author: string;
-  price: number;
-  description?: string;
-}
+describe('BookService', () => {
+  let service: BookService;
+  let httpMock: HttpTestingController;
 
-@Injectable({
-  providedIn: 'root'
-})
-export class BookService {
-  private apiUrl = 'http://localhost:8080/api/books';
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [BookService]
+    });
+    service = TestBed.inject(BookService);
+    httpMock = TestBed.inject(HttpTestingController);
+  });
 
-  constructor(private http: HttpClient) {}
+  afterEach(() => {
+    httpMock.verify();
+  });
 
-  getBooks(): Observable<Book[]> {
-    return this.http.get<Book[]>(this.apiUrl);
-  }
+  it('should fetch books', () => {
+    const mockBooks: Book[] = [
+      { id: 1, title: 'Book One', author: 'Author One', price: 29.99 },
+      { id: 2, title: 'Book Two', author: 'Author Two', price: 39.99 }
+    ];
 
-  addBook(book: Book): Observable<Book> {
-    return this.http.post<Book>(this.apiUrl, book);
-  }
+    service.getBooks().subscribe(books => {
+      expect(books.length).toBe(2);
+      expect(books).toEqual(mockBooks);
+    });
 
-  updateBook(id: number, book: Book): Observable<Book> {
-    return this.http.put<Book>(`${this.apiUrl}/${id}`, book);
-  }
-
-  deleteBook(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
-  }
-}
+    const req = httpMock.expectOne('http://localhost:8080/api/books');
+    expect(req.request.method).toBe('GET');
+    req.flush(mockBooks);
+  });
+});

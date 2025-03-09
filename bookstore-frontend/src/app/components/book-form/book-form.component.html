@@ -1,1 +1,27 @@
-<p>test</p>
+<div class="book-form-container">
+    <h2 *ngIf="!book.id">Add New Book</h2>
+    <h2 *ngIf="book.id">Edit Book</h2>
+    <form (ngSubmit)="onSubmit(bookForm)" #bookForm="ngForm">
+      <mat-form-field appearance="fill">
+        <mat-label>Title</mat-label>
+        <input matInput type="text" name="title" [(ngModel)]="book.title" required minlength="1" maxlength="100">
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Author</mat-label>
+        <input matInput type="text" name="author" [(ngModel)]="book.author" required minlength="1" maxlength="100">
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Price</mat-label>
+        <input matInput type="number" name="price" [(ngModel)]="book.price" required min="0">
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Description</mat-label>
+        <textarea matInput name="description" [(ngModel)]="book.description" maxlength="500"></textarea>
+      </mat-form-field>
+  
+      <button mat-raised-button color="primary" type="submit" [disabled]="!bookForm.valid">{{ book.id ? 'Update' : 'Add' }} Book</button>
+    </form>
+  </div>
