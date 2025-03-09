@@ -1,27 +1,82 @@
 <div class="book-form-container">
-    <h2 *ngIf="!book.id">Add New Book</h2>
-    <h2 *ngIf="book.id">Edit Book</h2>
-    <form (ngSubmit)="onSubmit(bookForm)" #bookForm="ngForm">
-      <mat-form-field appearance="fill">
-        <mat-label>Title</mat-label>
-        <input matInput type="text" name="title" [(ngModel)]="book.title" required minlength="1" maxlength="100">
-      </mat-form-field>
-  
-      <mat-form-field appearance="fill">
-        <mat-label>Author</mat-label>
-        <input matInput type="text" name="author" [(ngModel)]="book.author" required minlength="1" maxlength="100">
-      </mat-form-field>
-  
-      <mat-form-field appearance="fill">
-        <mat-label>Price</mat-label>
-        <input matInput type="number" name="price" [(ngModel)]="book.price" required min="0">
-      </mat-form-field>
-  
-      <mat-form-field appearance="fill">
-        <mat-label>Description</mat-label>
-        <textarea matInput name="description" [(ngModel)]="book.description" maxlength="500"></textarea>
-      </mat-form-field>
-  
-      <button mat-raised-button color="primary" type="submit" [disabled]="!bookForm.valid">{{ book.id ? 'Update' : 'Add' }} Book</button>
-    </form>
-  </div>
+  <h2 class="form-header">{{ book.id ? 'Edit Book' : 'Add New Book' }}</h2>
+  <form (ngSubmit)="onSubmit(bookForm)" #bookForm="ngForm" class="book-form">
+    <!-- Title Field -->
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>Title</mat-label>
+      <input
+        matInput
+        type="text"
+        name="title"
+        [(ngModel)]="book.title"
+        required
+        minlength="1"
+        maxlength="100"
+        #title="ngModel"
+      />
+      <mat-error *ngIf="title.invalid && (title.touched || title.dirty)">
+        Title is required and must be between 1 and 100 characters.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Author Field -->
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>Author</mat-label>
+      <input
+        matInput
+        type="text"
+        name="author"
+        [(ngModel)]="book.author"
+        required
+        minlength="1"
+        maxlength="100"
+        #author="ngModel"
+      />
+      <mat-error *ngIf="author.invalid && (author.touched || author.dirty)">
+        Author is required and must be between 1 and 100 characters.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Price Field -->
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>Price</mat-label>
+      <input
+        matInput
+        type="number"
+        name="price"
+        [(ngModel)]="book.price"
+        required
+        min="0"
+        #price="ngModel"
+      />
+      <mat-error *ngIf="price.invalid && (price.touched || price.dirty)">
+        Price is required and must be a positive number.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Description Field -->
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>Description</mat-label>
+      <textarea
+        matInput
+        name="description"
+        [(ngModel)]="book.description"
+        maxlength="500"
+        #description="ngModel"
+      ></textarea>
+      <mat-hint>{{ description.value?.length || 0 }}/500</mat-hint>
+    </mat-form-field>
+
+    <!-- Submit Button -->
+    <div class="form-actions">
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="!bookForm.valid"
+      >
+        {{ book.id ? 'Update' : 'Add' }} Book
+      </button>
+    </div>
+  </form>
+</div>
