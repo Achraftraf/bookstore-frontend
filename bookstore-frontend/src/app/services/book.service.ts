@@ -1,14 +1,7 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';  // Import axios
 import { Observable } from 'rxjs';
-
-export interface Book {
-  id?: number;
-  title: string;
-  author: string;
-  price: number;
-  description?: string;
-}
+import { Book } from '../models/book.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +9,6 @@ export interface Book {
 export class BookService {
   private apiUrl = 'http://localhost:8080/api/books';  // Your backend API URL
 
-  // Replace the HttpClient with axios
   constructor() {}
 
   // Get all books
@@ -75,3 +67,5 @@ export class BookService {
     });
   }
 }
+export type { Book };
+

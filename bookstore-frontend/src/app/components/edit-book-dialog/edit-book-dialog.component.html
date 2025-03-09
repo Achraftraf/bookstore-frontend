@@ -1,0 +1,76 @@
+<div style="margin-left: 16px; margin-top: 10px;"><h1 mat-dialog-title class="dialog-title">{{ updatedBook.id ? 'Edit Book' : 'Add New Book' }}</h1></div>
+<div mat-dialog-content class="dialog-content">
+  <!-- Title Field -->
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Title</mat-label>
+    <input
+      matInput
+      [(ngModel)]="updatedBook.title"
+      name="title"
+      required
+      minlength="1"
+      maxlength="100"
+      #title="ngModel"
+      aria-label="Title"
+    />
+    <mat-hint align="end">{{ title.value?.length || 0 }}/100</mat-hint>
+    <mat-error *ngIf="title.invalid && (title.touched || title.dirty)">
+      Title is required and must be between 1 and 100 characters.
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Author Field -->
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Author</mat-label>
+    <input
+      matInput
+      [(ngModel)]="updatedBook.author"
+      name="author"
+      required
+      minlength="1"
+      maxlength="100"
+      #author="ngModel"
+      aria-label="Author"
+    />
+    <mat-hint align="end">{{ author.value?.length || 0 }}/100</mat-hint>
+    <mat-error *ngIf="author.invalid && (author.touched || author.dirty)">
+      Author is required and must be between 1 and 100 characters.
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Price Field -->
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Price</mat-label>
+    <span matPrefix style="margin-left: 16px ;">$</span>
+    <input
+      matInput
+      type="number"
+      [(ngModel)]="updatedBook.price"
+      name="price"
+      required
+      min="0"
+      step="0.01"
+      #price="ngModel"
+      aria-label="Price"
+    />
+    <mat-error *ngIf="price.invalid && (price.touched || price.dirty)">
+      Price is required and must be a positive number.
+    </mat-error>
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions class="dialog-actions">
+  <button mat-button (click)="onNoClick()" aria-label="Cancel">Cancel</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="onSave()"
+    [disabled]="!isFormValid() || isSaving"
+    aria-label="Save"
+  >
+    <span *ngIf="!isSaving">Save</span>
+    <span *ngIf="isSaving">
+      <mat-spinner diameter="20" color="accent"></mat-spinner>
+    </span>
+  </button>
+</div>

@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { BookService, Book } from '../../services/book.service';  // Import BookService and Book interface
+import { MatButtonModule } from '@angular/material/button';
+import { BookService, Book } from '../../services/book.service';
 
 @Component({
   selector: 'app-book-form',
@@ -13,42 +14,41 @@ import { BookService, Book } from '../../services/book.service';  // Import Book
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatButtonModule,
   ],
   templateUrl: './book-form.component.html',
+  styleUrls: ['./book-form.component.css'], // Add styles for the form
 })
 export class BookFormComponent {
-  book: Book = { id: undefined, title: '', author: '', price: 0, description: '' };  // Book object initialized
+  book: Book = { id: undefined, title: '', author: '', price: 0, description: '' }; // Initialize book object
 
   constructor(private bookService: BookService) {}
 
   // Method to handle form submission
   onSubmit(form: NgForm) {
     if (form.valid) {
-      // Check if it's an existing book or a new book
       if (this.book.id) {
-        // If the book has an id, update the book
-        this.bookService.updateBook(this.book).subscribe(
-          (updatedBook) => {
+        // Update existing book
+        this.bookService.updateBook(this.book).subscribe({
+          next: (updatedBook) => {
             console.log('Book updated successfully', updatedBook);
-            // You can redirect or show a success message here
+            // Optionally, reset the form or navigate to another page
           },
-          (error) => {
+          error: (error) => {
             console.error('Error updating book', error);
-            // Show an error message if the update fails
-          }
-        );
-      } else {
-        // If the book doesn't have an id, add a new book
-        this.bookService.addBook(this.book).subscribe(
-          (newBook) => {
-            console.log('Book added successfully', newBook);
-            // You can redirect or show a success message here
           },
-          (error) => {
+        });
+      } else {
+        // Add new book
+        this.bookService.addBook(this.book).subscribe({
+          next: (newBook) => {
+            console.log('Book added successfully', newBook);
+            // Optionally, reset the form or navigate to another page
+          },
+          error: (error) => {
             console.error('Error adding book', error);
-            // Show an error message if the add fails
-          }
-        );
+          },
+        });
       }
     } else {
       console.log('Form is not valid');
