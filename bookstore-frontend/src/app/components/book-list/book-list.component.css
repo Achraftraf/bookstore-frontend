@@ -62,11 +62,11 @@
   }
   
   .action-button[color="accent"]:hover {
-    color: #ff4081;
+    color: #7040ff;
   }
   
   .action-button[color="warn"]:hover {
-    color: #f44336;
+    color: #4336f4;
   }
   
   @keyframes fadeIn {

@@ -87,6 +87,6 @@ export class BookListComponent implements OnInit {
   // Method to redirect to the "Add Book" page
   redirectToAddBookPage(): void {
     console.log('Redirecting to Add Book page...');
-    this.router.navigate(['/books/add']); // Replace '/add-book' with your actual route
+    this.router.navigate(['/add']); // Replace '/add-book' with your actual route
   }
 }
